@@ -33,7 +33,7 @@ jobs:
           wait
 
       - name: 📊 Publicar resultados
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: newman-reports
           path: newman/
