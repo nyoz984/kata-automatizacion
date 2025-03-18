@@ -25,6 +25,9 @@ jobs:
       - name: 📦 Instalar dependencias
         run: npm install
 
+      - name: 📂 Verificar directorio de reportes
+        run: mkdir -p newman
+
       - name: 🚀 Ejecutar pruebas en paralelo
         run: |
           npx newman run tests/api-tests.json --iteration-data data.json --reporters cli,junit --reporter-junit-export=newman/report1.xml &
@@ -33,7 +36,7 @@ jobs:
           wait
 
       - name: 📊 Publicar resultados
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: newman-reports
           path: newman/
