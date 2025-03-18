@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "newman": "^5.3.2",
+    "newman-reporter-html": "^1.0.5"
+  },
+  "scripts": {
+    "test": "newman run FakeStoreAPI.postman_collection.json -e FakeStoreAPI.postman_environment.json -r cli",
+    "test:html": "newman run FakeStoreAPI.postman_collection.json -e FakeStoreAPI.postman_environment.json -r html --reporter-html-export newman/report_normal.html",
+    "test:parallel": "npx concurrently -k \"newman run FakeStoreAPI.postman_collection.json -e FakeStoreAPI.postman_environment.json -r html --reporter-html-export newman/report_parallel_1.html\" \"newman run FakeStoreAPI.postman_collection.json -e FakeStoreAPI.postman_environment.json -r html --reporter-html-export newman/report_parallel_2.html\" \"newman run FakeStoreAPI.postman_collection.json -e FakeStoreAPI.postman_environment.json -r html --reporter-html-export newman/report_parallel_3.html\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

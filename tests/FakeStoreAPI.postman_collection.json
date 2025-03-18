@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "ea2cb0cd-3a5f-4378-9ab5-5540352a5635",
+		"name": "FakeStore API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18689498"
+	},
+	"item": [
+		{
+			"name": "Exitosas",
+			"item": [
+				{
+					"name": "Obtener productos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"El código de estado es 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"La respuesta no está vacía\", function () {\r",
+									"    pm.expect(pm.response.json()).to.not.be.empty;\r",
+									"});\r",
+									"pm.test(\"El campo 'title' existe en la respuesta\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('array').that.is.not.empty;\r",
+									"\r",
+									"    jsonData.forEach(product => {\r",
+									"        pm.expect(product).to.have.property('title');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un producto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"El código de estado es 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"La respuesta no está vacía\", function () {\r",
+									"    pm.expect(pm.response.json()).to.not.be.empty;\r",
+									"});\r",
+									"pm.test(\"El campo 'title' existe en la respuesta\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('object'); // Aquí esperamos un objeto, no un array\r",
+									"    pm.expect(jsonData).to.have.property('title');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"http://127.0.0.1:3000/products\", function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.log(\"❌ Error al leer el archivo JSON:\", err);\r",
+									"    } else {\r",
+									"        let testData = res.json()[0];  // Tomar el primer producto del JSON\r",
+									"        delete testData.id;  // Eliminar el campo 'id' antes de enviarlo\r",
+									"        pm.globals.set(\"testData\", JSON.stringify(testData));\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{testData}}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar un producto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"El código de estado es 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"La respuesta no está vacía\", function () {\r",
+									"    pm.expect(pm.response.json()).to.not.be.empty;\r",
+									"});\r",
+									"pm.test(\"El campo 'title' existe en la respuesta\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('object'); // Aquí esperamos un objeto, no un array\r",
+									"    pm.expect(jsonData).to.have.property('title');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"http://127.0.0.1:3000/products\", function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.log(\"❌ Error al leer el archivo JSON:\", err);\r",
+									"    } else {\r",
+									"        let testData = res.json()[0];  // Tomar el primer producto del JSON\r",
+									"        delete testData.id;  // Eliminar el campo 'id' antes de enviarlo\r",
+									"        pm.globals.set(\"testData\", JSON.stringify(testData));\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{testData}}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar un producto",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"El código de estado es 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"La respuesta no está vacía\", function () {\r",
+									"    pm.expect(pm.response.json()).to.not.be.empty;\r",
+									"});\r",
+									"pm.test(\"El campo 'title' existe en la respuesta\", function () {\r",
+									"    let jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an('object'); // Aquí esperamos un objeto, no un array\r",
+									"    pm.expect(jsonData).to.have.property('title');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let deleteProduct = {\r",
+									"    \"id\": 21\r",
+									"};\r",
+									"\r",
+									"pm.environment.set(\"deleteProductData\", JSON.stringify(deleteProduct));"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{deleteProductData}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fallidas",
+			"item": [
+				{
+					"name": "Intentar obtener un producto inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Debe fallar al obtener un producto inexistente\", function () {\r",
+									"    pm.response.to.have.status(404); // Esperamos 404\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/9999",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Intentar crear un producto con datos inválidos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"http://127.0.0.1:3000/products\", function (err, res) {\r",
+									"    if (err) {\r",
+									"        console.log(\"❌ Error al leer el archivo JSON:\", err);\r",
+									"    } else {\r",
+									"        let testData = res.json()[0];  // Tomar el primer producto del JSON\r",
+									"        delete testData.id;  // Eliminar el campo 'id' antes de enviarlo\r",
+									"        delete testData.price; // ❌ Hacer el producto inválido quitando el precio\r",
+									"        pm.globals.set(\"testData\", JSON.stringify(testData));\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{{testData}}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Intentar eliminar un producto inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Debe fallar al eliminar un producto inexistente\", function () {\r",
+									"    pm.response.to.have.status(404); // Esperamos 404\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.have.property(\"error\"); // Debería indicar un error\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/9999",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"9999"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://fakestoreapi.com",
+			"type": "string"
+		}
+	]
+}

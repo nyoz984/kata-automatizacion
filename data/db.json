@@ -1,0 +1,18 @@
+{
+  "products": [
+    {
+      "title": "Laptop Gamer",
+      "price": 1500,
+      "description": "Laptop con GPU RTX 3060",
+      "image": "https://example.com/laptop.jpg",
+      "category": "electronics"
+    },
+    {
+      "title": "Smartphone",
+      "price": 800,
+      "description": "Teléfono con pantalla OLED",
+      "image": "https://example.com/phone.jpg",
+      "category": "electronics"
+    }
+  ]
+}
