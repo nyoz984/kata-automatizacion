@@ -23,7 +23,7 @@ jobs:
           node-version: 18
 
       - name: 📦 Instalar dependencias
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: 📂 Verificar directorio de reportes
         run: mkdir -p newman
