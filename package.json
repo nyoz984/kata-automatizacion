@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "newman": "^5.3.2",
+    "newman": "4.6.0",
     "newman-reporter-html": "^1.0.5"
   },
   "scripts": {
@@ -12,3 +12,4 @@
     "concurrently": "^9.1.2"
   }
 }
+
