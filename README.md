@@ -29,9 +29,9 @@ npm run test:parallel
 ---
 
 ## 4: Subir cambios al repositorio
-Ejecuta estos comandos para confirmar y subir los cambios:
+Ejecuta estos comandos para confirmar y subir los cambios
 
 ```sh
 git add .
-git commit -m "Organizaci¨®n del repositorio con buenas pr¨¢cticas"
+git commit -m "OrganizaciÂ¨Â®n del repositorio con buenas prÂ¨Â¢cticas"
 git push origin feature/testing
